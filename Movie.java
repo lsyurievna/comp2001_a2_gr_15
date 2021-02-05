@@ -96,5 +96,13 @@ public class Movie
    
    public String getTime(){return screeningTime;}
    
+   public int getDuration(){return durationInMinutes;}
+   
+   public String getGenre(){return genre;}
+   
+   public String getDirector(){return directorName;}
+   
    public int getTheaterNumber(){return theaterNumber;}
+   
+   public String getPerformer(){return leadPerformer;}
 }

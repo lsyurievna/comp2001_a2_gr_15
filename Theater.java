@@ -3,8 +3,8 @@ import java.util.ArrayList;
 /**
  * Write a description of class Theater here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Liudmila Strelnikova
+ * @version 05.02.2021
  */
 public class Theater
 {
@@ -90,9 +90,15 @@ public class Theater
         screeningSchedule.removeIf(ss -> ss.getTheaterNumber()==theater);
     }
     
+    /**
+     *Calculates the number of screened movies in
+     *which a given performer plays (according to the screening schedule).
+     */
     public int getPerformerMovieCount(String performer)
-    {
-        // calculates the number of screened movies in which a given performer plays (according to the screening schedule) 
+    {   //won't work
+        //return Stream.of(screeningSchedule)
+            //.filter(ss -> ss.getPerformer().equals(performer))
+            //.count();
         return 0;
     }
     
@@ -101,10 +107,15 @@ public class Theater
         // prints all movies that screen after the start time and finish screening before the end time 
     }
     
+    /**
+     * Returns the combined duration of all movies played in all theaters.
+     */
     public int totalDurationOfAllMovies()
     {
-        // returns the combined duration of all movies played in all theaters
-        return 0;
+        //1615 min expected from the movies.csv provided
+        return screeningSchedule.stream()
+            .map(ss -> ss.getDuration())
+            .reduce(0,(acc,duration)->acc+duration);
     }
     
     public String genreAfter(String time)
