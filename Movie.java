@@ -92,4 +92,9 @@ public class Movie
        System.out.println("Lead performer: " + leadPerformer);
    }
    
+   public String getTitle(){return movieTitle;}
+   
+   public String getTime(){return screeningTime;}
+   
+   public int getTheaterNumber(){return theaterNumber;}
 }

@@ -30,10 +30,14 @@ public class Theater
         screeningSchedule.addAll(reader.getMovies(filename));
     }
     
+    /**
+     * Prints all movie titles using a map, one movie per line.
+     */
     public void printAllMovies()
     {
-        // prints for all movies the corresponding info
-        // movies are separated by an empty line
+        screeningSchedule.stream()
+            .map(ss -> ss.getTitle())
+            .forEach(titles -> System.out.println(titles));
     }
     
     public void printMoviesBefore(String time)
@@ -42,16 +46,23 @@ public class Theater
         // one movie per line
     }
     
+    
     public void printMoviesInBefore(int theater, String time)
     {
-        // prints all movies playing before the given time and in the given theater
-        // one movie per line
+       // prints all movies playing before the given time and in the given theater
+       // one movie per line
     }
     
+    /**
+     * Prints the titles of all movies that play in a given theatre (one movie per line)
+     * @param theater the number of theater of interest
+     */
     public void moviesInTheater(int theater)
     {
-        // prints all movies that play in the given theater 
-        // one movie per line
+        screeningSchedule.stream()
+            .filter(ss -> ss.getTheaterNumber() == theater)
+            .map(ss -> ss.getTitle())
+            .forEach(movieInTheatre -> System.out.println(movieInTheatre));
     }
     
     public int numberOfMoviesInTimePeriod(String start, String end)
