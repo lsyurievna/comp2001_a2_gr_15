@@ -71,14 +71,23 @@ public class Theater
         return 0;
     }
     
+    /**
+     *Removes a given movie in a given theater from the screening schedule.
+     *@param movie movie to be removed
+     *@param theater number of theater from which a movie is to be removed
+     */
     public void cancelScreening(String movie, int theater)
     {
-        // removes a given movie in a given theater from the screening schedule
+        screeningSchedule.removeIf(ss -> ss.getTitle().equals(movie) && ss.getTheaterNumber()==theater);
     }
-    
+   
+    /**
+     *Removes all movies in a given theater from the the screening schedule.
+     *@param theater number of theater to be closed
+     */
     public void closeTheater(int theater)
     {
-        // removes all movies in a given theater from the the screening schedule
+        screeningSchedule.removeIf(ss -> ss.getTheaterNumber()==theater);
     }
     
     public int getPerformerMovieCount(String performer)
