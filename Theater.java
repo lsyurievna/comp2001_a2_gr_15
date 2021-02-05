@@ -16,7 +16,7 @@ public class Theater
     public Theater()
     {
         // initialise instance variables
-        
+        screeningSchedule = new ArrayList<>();
     }
     
     /**
