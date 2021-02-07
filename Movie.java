@@ -58,21 +58,63 @@ public class Movie
        }
        return match;
    }
-    
+   
+   /**
+    * Checks if the theater number has a value  from 1 to 16.
+    * @param theater number of theater to be checked
+    * @return correct true if theater number is in the range, false otherwise
+    */
    private boolean checkTheaterNumber(int theater)
-   {
-       return true;
+   {    
+       boolean correct = false;
+       if (theater >= 1 && theater <= 16){correct = true;}
+       return correct;
    }
    
-   //Haven't come up with any decent code for this one yet. 
+   /**
+    * Checks if the screening time is between 10:00 and 23:45. Checks also that a semicolon
+    * separates hours and minutes.
+    * @param time screening time to be checked
+    * @return correct if the time is correct, else otherwise
+    */
+   //Code for this method looks a bit bulky, however I have not come with a beter 
+   //solution yet. 
    private boolean checkScreeningTime(String time)
-   {
-       return true;
+   {   
+       boolean correct = false;
+       if (time.length()==5){
+           if (time.substring(2) == ":"){
+               int hours = Integer.parseInt(time.substring(0,2));
+               int minutes = Integer.parseInt(time.substring(3,5));
+               //one nice thing about parseInt is that it will convert "01" to "1" ignoring
+               //ignoring the zero and eliminating some coding pain
+               if (hours >=10 && hours <= 22){
+                   if (minutes>=0 && minutes<=59){
+                       correct = true;
+                   }
+               }
+               else if (hours == 23){
+                   if (minutes >=0 && minutes <=45){
+                       correct = true;
+                   }
+               }
+           }
+       }
+       return correct;
    }
-    
+   
+   /**
+    * Checks if the duration is between 45 and 210 minutes. 
+    * @param duration duration of a movie in minutes
+    * @return correct if duration is correct, false otherwise
+    */
    private boolean checkDuration(int duration)
    {
-       return true;
+       boolean correct = false;
+       if (duration>=45 && duration <=210){
+           correct = true;
+       }
+       return correct;
    }
    
    /**
