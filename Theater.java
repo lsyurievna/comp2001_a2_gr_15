@@ -41,6 +41,16 @@ public class Theater
             .forEach(titles -> System.out.println(titles));
     }
     
+    public int getScreeningTimeInMinutes() 
+   {
+      String[] timeHoursMinute = this.screeningTime.split(":");
+      int hours = Integer.parseInt(timeHoursMinute[0]);
+      int minutes = Integer.parseInt(timeHoursMinute[1]);
+      int screenTimeInMinutes = (hours * 60) + minutes;
+
+      return screenTimeInMinutes;
+   }
+    
     public void printMoviesBefore(String time)
     {
         // prints all movies which play before the given time 
