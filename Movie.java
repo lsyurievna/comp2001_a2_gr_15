@@ -103,12 +103,12 @@ public class Movie
    }
    public int getTheaterNumber() 
    {
-      return this.theaterNumber
+      return this.theaterNumber;
    }
   
    
    //Haven't come up with any decent code for this one yet. 
-   private boolean checkScreeningTime(String time;)
+   private boolean checkScreeningTime(String time,)
    {
       int screenTimeUpperBound = 1425; // 23:45 converted into time minutes
       int screenTimeLowerBound = 600; // 10:00 converted into time minutes
