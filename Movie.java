@@ -96,7 +96,7 @@ public class Movie
     
    private boolean checkTheaterNumber(int theater)
    {
-      if (TheaterNumber > 0 && TheaterNumber <17) {
+      if (theaterNumber > 0 && theaterNumber <17) {
          return true;
       }
       return false;
@@ -125,7 +125,7 @@ public class Movie
     
    private boolean checkDuration(int duration)
    {
-       if (Duration > 44 && Duration <211) {
+       if (duration > 44 && duration <211) {
          return true;
       }
       return false;
