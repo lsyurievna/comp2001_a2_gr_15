@@ -4,6 +4,7 @@
  * verification methods that check correctness of entries. 
  *
  * @author Liudmila Strelnikova
+ * @author kailesh sugumar
  * @version 05.02.2021
  */
 
@@ -27,15 +28,49 @@ public class Movie
    public Movie(String title, String time, int duration, int theater,  
                 String genre, String director, String performer)
    {
-       movieTitle = title;
-       screeningTime = time;
-       durationInMinutes = duration;
-       theaterNumber = theater;
-       this.genre = genre;
-       directorName = director;
-       leadPerformer = performer;
+      if(checkGenre(genre)) {
+         if(checkTheaterNumber(theater)) {
+            if(checkScreeningTime(time)) {
+               if(checkDuration(duration)) {
+                     
+               }
+               else {
+                  System.out.println("Invalid genre format");
+               }
+            }
+            else {
+               System.out.println("Invalid theater number");
+            }               
+          }
+          else {
+            System.out.println("Invalid time format");
+          }
+       }
+       else {
+         System.out.println("Invalid duration number");
+       }   
    }
    
+   {
+      movieTitle = title;
+      screeningTime = time;
+      durationInMinutes = duration;
+      theaterNumber = theater;
+      this.genre = genre;
+      directorName = director;
+      leadPerformer = performer;
+   
+   }                                     
+  
+   public int getScreeningTimeInMinutes() 
+   {
+      String[] timeHoursMinute = this.screeningTime.split(":");
+      int hours = Integer.parseInt(timeHoursMinute[0]);
+      int minutes = Integer.parseInt(timeHoursMinute[1]);
+      int screenTimeInMinutes = (hours * 60) + minutes;
+
+      return screenTimeInMinutes;
+   }
    /**
      * A private method that checks correctness of input for the movie genre
      * @param genre the genre entered by the user
@@ -61,19 +96,41 @@ public class Movie
     
    private boolean checkTheaterNumber(int theater)
    {
-       return true;
+      if (TheaterNumber > 0 && TheaterNumber <17) {
+         return true;
+      }
+      return false;
    }
+   public int getTheaterNumber() 
+   {
+      return this.theaterNumber
+   }
+  
    
    //Haven't come up with any decent code for this one yet. 
-   private boolean checkScreeningTime(String time)
+   private boolean checkScreeningTime(String time;)
    {
-       return true;
+      int screenTimeUpperBound = 1425; // 23:45 converted into time minutes
+      int screenTimeLowerBound = 600; // 10:00 converted into time minutes
+
+// Convert 24hr time format to minutes
+      String[] timeHoursMinute = time.split(":");
+      int hours = Integer.parseInt(timeHoursMinute[0]);
+      int minutes = Integer.parseInt(timeHoursMinute[1]);
+      int screenTimeInMinutes = (hours * 60) + minutes;
+
+// Checks if screen Time is with bounds.
+      return screenTimeInMinutes >= screenTimeLowerBound && screenTimeInMinutes <= screenTimeUpperBound;
    }
     
    private boolean checkDuration(int duration)
    {
-       return true;
+       if (Duration > 44 && Duration <211) {
+         return true;
+      }
+      return false;
    }
+
    
    /**
     * Print all the info about a movie.
