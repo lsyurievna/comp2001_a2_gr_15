@@ -60,7 +60,7 @@ public class Theater
         int minutes = Integer.parseInt(timeHoursMinute[1]);
         int screenTimeInMinutes = (hours * 60) + minutes;
   
-        screeningSchedule.stream().filter(movies -> movies.getScreeningTimeInMinutes()< screenTimeInMinutes).forEach(movies -> movies.printInfoSimple());
+        screeningSchedule.stream().filter(movies -> movies.getScreeningTimeInMinutes()< screenTimeInMinutes).forEach(movies -> System.out.println(MoviesBefore));
  
     }
     
@@ -74,7 +74,7 @@ public class Theater
         int minutes = Integer.parseInt(timeHoursMinute[1]);
         int screenTimeInMinutes = (hours * 60) + minutes;
   
-        screeningSchedule.stream().filter(movies -> movies.getScreeningTimeInMinutes()< screenTimeInMinutes).filter(movies -> (movies.getTheaterNumber() == theater)).forEach(movies -> movies.printInfoSimple());
+        screeningSchedule.stream().filter(movies -> movies.getScreeningTimeInMinutes()< screenTimeInMinutes).filter(movies -> (movies.getTheaterNumber() == theater)).forEach(movieInTheatre -> System.out.println(MoviesInBefore)););
     }
     
     /**
@@ -132,7 +132,7 @@ public class Theater
         // prints all movies that screen after the start time and finish screening before the end time 
          this.screeningSchedule.stream().filter(movie -> ((Movie) movie).getScreeningTime().compareTo(start) >= 0).filter(movie -> ((Movie) movie)
                                                           .getScreeningTimeInMinutes()<=((Integer.parseInt(end.split(":")[0])*60)+Integer
-                                                            .parseInt(end.split(":")[1]))).forEach(movie -> ((Movie) movie).printInfoSimple());
+                                                            .parseInt(end.split(":")[1]))).forEach(movie -> System.out.println(MoviesICanWatch));
     }
     
     /**
@@ -150,7 +150,7 @@ public class Theater
     {
         //returns a string which includes all genres playing after given time
          String stringToReturn = (String) this.screeningSchedule.stream().filter(movie -> ((Movie) movie).getScreeningTime().compareTo(time) >= 0)
-                        .reduce((movie1, movie2) -> ((Movie) movie1).getGenre() + ", " + ((Movie) movie2).getGenre()).get();
+                        .reduce((movie1, movie2) -> ((Movie) movie1).getGenre();
         return stringToReturn;
         
     }
@@ -160,7 +160,7 @@ public class Theater
         //returns a string which includes the titles of movies directed by director and in which performer is acting
         String stringToReturn = (String) this.screeningSchedule.stream().filter(movie -> ((Movie) movie).getDirectorName().compareToIgnoreCase(director) == 0)
                         .filter(movie -> ((Movie) movie).getLeadPerformer().compareToIgnoreCase(performer) == 0).reduce((movie1, movie2) -> ((Movie) movie1)
-                                                                              .getMovieTitle() + ", " + ((Movie) movie2).getMovieTitle()).get();
+                                                                              .getMovieTitle();
         return stringToReturn;
     }
     
