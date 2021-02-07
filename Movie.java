@@ -4,6 +4,7 @@
  * verification methods that check correctness of entries. 
  *
  * @author Liudmila Strelnikova
+ * @author kailesh sugumar
  * @version 05.02.2021
  */
 
@@ -27,15 +28,38 @@ public class Movie
    public Movie(String title, String time, int duration, int theater,  
                 String genre, String director, String performer)
    {
-       movieTitle = title;
-       screeningTime = time;
-       durationInMinutes = duration;
-       theaterNumber = theater;
-       this.genre = genre;
-       directorName = director;
-       leadPerformer = performer;
+      if(checkGenre(genre)) {
+         if(checkTheaterNumber(theater)) {
+            if(checkScreeningTime(time)) {
+               if(checkDuration(duration)) {
+                     movieTitle = title;
+                     screeningTime = time;
+                     durationInMinutes = duration;
+                     theaterNumber = theater;
+                     this.genre = genre;
+                     directorName = director;
+                     leadPerformer = performer;
+                                        
+               }
+               else {
+                  System.out.println("Invalid genre format");
+               }
+            }
+            else {
+               System.out.println("Invalid theater number");
+            }               
+          }
+          else {
+            System.out.println("Invalid time format");
+          }
+       }
+       else {
+         System.out.println("Invalid duration number");
+       }   
    }
-   
+         
+  
+  
    /**
      * A private method that checks correctness of input for the movie genre
      * @param genre the genre entered by the user
@@ -61,19 +85,31 @@ public class Movie
     
    private boolean checkTheaterNumber(int theater)
    {
-       return true;
+      if (TheaterNumber > 0 && TheaterNumber <17) {
+         return true;
+      }
+      return false;
    }
+
+  
    
    //Haven't come up with any decent code for this one yet. 
-   private boolean checkScreeningTime(String time)
+   private boolean checkScreeningTime(String time;)
    {
-       return true;
+      if (Pattern.matches("[0-2][0-9]:[0-5][0-9]") {
+         return true;
+      }
+      return false;
    }
     
    private boolean checkDuration(int duration)
    {
-       return true;
+       if (Duration > 44 && Duration <211) {
+         return true;
+      }
+      return false;
    }
+
    
    /**
     * Print all the info about a movie.
