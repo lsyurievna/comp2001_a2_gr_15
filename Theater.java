@@ -54,6 +54,9 @@ public class Theater
         int hours = Integer.parseInt(timeHoursMinute[0]);
         int minutes = Integer.parseInt(timeHoursMinute[1]);
         int screenTimeInMinutes = (hours * 60) + minutes;
+        
+        //Could have made a separate class for time to avoid rewriting the 
+        //above lines of code over and over again. 
   
         screeningSchedule.stream()
             .filter(movies -> movies.getScreeningTimeInMinutes() < screenTimeInMinutes)
@@ -226,6 +229,7 @@ public class Theater
             .filter(ss->ss.getPerformer().equals(performer))
             .map(ss->ss.getTitle())
             .reduce(("Movies directed by "+director+" with "+performer+" as a lead performer: "), (acc,title) -> acc+title);
+        //quick test: when entered "Ridley Scott", "Matt Damon", the string shoud include "The Martian" two times
     }
-    //quick test: when entered "Ridley Scott", "Matt Damon", the string shoud include "The Martian" two times
+    
 } 

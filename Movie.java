@@ -1,8 +1,9 @@
 
 /**
- * class Movie contains all the information about a movie as well as some
- * verification methods that check correctness of entries. 
- *
+ * class Movie contains all the information about a movie 
+ * such as its title, duration, genre, etc..
+ * The class also contains accessor methods and 
+ * verification methods that check correctness of some entries. 
  * @author Liudmila Strelnikova, Kailesh Sugumar
  * @version 08.02.2021
  */
@@ -25,7 +26,7 @@ public class Movie
 
    /**
      * Constructor for objects of class Movie
-     */
+    */
    public Movie(String title, String time, int duration, int theater,  
                 String genre, String director, String performer)
    {
@@ -54,7 +55,7 @@ public class Movie
        //so that the values are assigned without repeatedly applying the .add() method.
    {   ArrayList<String> allowedGenres = new ArrayList<>(Arrays.asList("drama", "comedy", "thriller", "horror", "family", "action", "adventure"));
        Iterator<String> it = allowedGenres.iterator();
-       boolean match = false;//at the beginning I assume that the is no match
+       boolean match = false;//at the beginning I assume that there is no match
        while(it.hasNext())
        {
            String g = it.next();
@@ -80,7 +81,7 @@ public class Movie
    
    /**
     * Checks if the screening time is between 10:00 and 23:45. Checks also that a semicolon
-    * separates hours and minutes.
+    * separates hours and minutes, and if the length of entered string is 5 characters long.
     * @param time screening time to be checked
     * @return correct true if the time is entered correctly, false otherwise
     */
