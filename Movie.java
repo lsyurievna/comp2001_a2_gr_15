@@ -12,7 +12,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 public class Movie
-{
+{ 
+   
    private String movieTitle;
    private String screeningTime;
    private int durationInMinutes;
@@ -20,6 +21,7 @@ public class Movie
    private String genre;
    private String directorName;
    private String leadPerformer;
+   
 
    /**
      * Constructor for objects of class Movie
@@ -28,12 +30,21 @@ public class Movie
                 String genre, String director, String performer)
    {
        movieTitle = title;
-       screeningTime = time;
-       durationInMinutes = duration;
-       theaterNumber = theater;
-       this.genre = genre;
+       //screeningTime = time;
+       //durationInMinutes = duration;
+       //theaterNumber = theater;
+       //this.genre = genre;
        directorName = director;
        leadPerformer = performer;
+       
+       if (checkGenre(genre)) {this.genre = genre;}
+       else {System.out.println("Incorrect genre");}
+       if (checkTheaterNumber(theater)) {theaterNumber = theater;}
+       else {System.out.println("Incorrect theater number");}
+       if (checkScreeningTime(time)) {screeningTime = time;}
+       else {System.out.println("Incorrect screening time");}
+       if (checkDuration(duration)) {durationInMinutes = duration;}
+       else {System.out.println("Incorrect duration");}
    }
    
    /**
@@ -81,26 +92,7 @@ public class Movie
    //solution yet. 
    private boolean checkScreeningTime(String time)
    {   
-       boolean correct = false;
-       if (time.length()==5){
-           if (time.substring(2) == ":"){
-               int hours = Integer.parseInt(time.substring(0,2));
-               int minutes = Integer.parseInt(time.substring(3,5));
-               //one nice thing about parseInt is that it will convert "01" to "1" ignoring
-               //ignoring the zero and eliminating some coding pain
-               if (hours >=10 && hours <= 22){
-                   if (minutes>=0 && minutes<=59){
-                       correct = true;
-                   }
-               }
-               else if (hours == 23){
-                   if (minutes >=0 && minutes <=45){
-                       correct = true;
-                   }
-               }
-           }
-       }
-       return correct;
+       return true;
    }
    
    /**
@@ -140,7 +132,7 @@ public class Movie
    
    public int getDuration(){return durationInMinutes;}
    
-   public String getGenre(){return genre;}
+   public String getGenre(){return this.genre;}
    
    public String getDirector(){return directorName;}
    
