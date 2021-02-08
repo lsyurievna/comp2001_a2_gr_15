@@ -30,13 +30,10 @@ public class Movie
                 String genre, String director, String performer)
    {
        movieTitle = title;
-       //screeningTime = time;
-       //durationInMinutes = duration;
-       //theaterNumber = theater;
-       //this.genre = genre;
        directorName = director;
        leadPerformer = performer;
        
+       //Verification of correctness is required for some of the variables before value assignment.
        if (checkGenre(genre)) {this.genre = genre;}
        else {System.out.println("Incorrect genre");}
        if (checkTheaterNumber(theater)) {theaterNumber = theater;}
@@ -56,7 +53,6 @@ public class Movie
        //Creation of an array that is later converted to an ArrayList object, 
        //so that the values are assigned without repeatedly applying the .add() method.
    {   ArrayList<String> allowedGenres = new ArrayList<>(Arrays.asList("drama", "comedy", "thriller", "horror", "family", "action", "adventure"));
-       //A non-lambda implementation until I haven't come up with the more efficient one
        Iterator<String> it = allowedGenres.iterator();
        boolean match = false;//at the beginning I assume that the is no match
        while(it.hasNext())
@@ -86,13 +82,25 @@ public class Movie
     * Checks if the screening time is between 10:00 and 23:45. Checks also that a semicolon
     * separates hours and minutes.
     * @param time screening time to be checked
-    * @return correct if the time is correct, else otherwise
+    * @return correct true if the time is entered correctly, false otherwise
     */
-   //Code for this method looks a bit bulky, however I have not come with a beter 
-   //solution yet. 
+
    private boolean checkScreeningTime(String time)
    {   
-       return true;
+       boolean correct = false;//assime in the begining that the format is wrong
+       
+       if (time.length()==5){ //first check if the stirng is of lenth 5
+           String[] timeHoursMinute = time.split(":");//splits time into {"hours", "minutes"}
+           int hours = Integer.parseInt(timeHoursMinute[0]);
+           int minutes = Integer.parseInt(timeHoursMinute[1]);
+           int screenTimeInMinutes = (hours * 60) + minutes;//conversion to minutes
+           int screenTimeLowerBound = 600;//10*60
+           int screenTimeUpperBound = 1425; //23*60+45
+       
+           correct = screenTimeInMinutes >= screenTimeLowerBound && screenTimeInMinutes <= screenTimeUpperBound;
+       }
+       
+       return correct;
    }
    
    /**
@@ -110,11 +118,8 @@ public class Movie
    }
    
    /**
-    * Print all the info about a movie.
+    * Prints all the info about a movie, each feature on a separate line.
     */
-   //should probably add the all the info about the film to an array
-   //and then reduce int to one string but that way I would lose 
-   //description of what means what
    public void printInfo()
    {
        System.out.println("Title: " + movieTitle);
@@ -125,6 +130,8 @@ public class Movie
        System.out.println("Director: " + directorName);
        System.out.println("Lead performer: " + leadPerformer);
    }
+   
+   //Accessor methods for the class. 
    
    public String getTitle(){return movieTitle;}
    
