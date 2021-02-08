@@ -3,8 +3,8 @@
  * class Movie contains all the information about a movie as well as some
  * verification methods that check correctness of entries. 
  *
- * @author Liudmila Strelnikova
- * @version 05.02.2021
+ * @author Liudmila Strelnikova, Kailesh Sugumar
+ * @version 08.02.2021
  */
 
 import java.util.ArrayList;
@@ -146,4 +146,17 @@ public class Movie
    public int getTheaterNumber(){return theaterNumber;}
    
    public String getPerformer(){return leadPerformer;}
+   
+   /**
+    * Gets screening time in minutes.
+    * @return screenTimeInMinutes 
+    */
+   public int getScreeningTimeInMinutes(){
+      String[] timeHoursMinute = screeningTime.split(":");
+      int hours = Integer.parseInt(timeHoursMinute[0]);
+      int minutes = Integer.parseInt(timeHoursMinute[1]);
+      int screenTimeInMinutes = (hours * 60) + minutes;
+
+      return screenTimeInMinutes;
+   }
 }

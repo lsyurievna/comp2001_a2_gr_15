@@ -3,8 +3,8 @@ import java.util.ArrayList;
 /**
  * Write a description of class Theater here.
  *
- * @author Liudmila Strelnikova
- * @version 05.02.2021
+ * @author Liudmila Strelnikova, Kailesh Sugumar
+ * @version 08.02.2021
  */
 public class Theater
 {
@@ -31,7 +31,7 @@ public class Theater
     }
     
     /**
-     * Prints all movie titles using a map, one movie per line.
+     * Prints all movie titles, one movie per line.
      */
     public void printAllMovies()
     {
@@ -46,33 +46,18 @@ public class Theater
     */
     public void printMoviesBefore(String time)
     {
+        // prints all movies which play before the given time 
+        // one movie per line
+        String[] timeHoursMinute = time.split(":");
+        int hours = Integer.parseInt(timeHoursMinute[0]);
+        int minutes = Integer.parseInt(timeHoursMinute[1]);
+        int screenTimeInMinutes = (hours * 60) + minutes;
+  
         screeningSchedule.stream()
-            //A fancy filter which takes a big lambda function and returns true for a movie
-            //if it's screening time is before the required time, false otherwise.
-            //At the end, a stream with only the required times is formed.
-            .filter(
-                (ss)->
-                {
-                    boolean pass = false;//filter returns a boolean pass
-                    //first check if the hour of screening is less than the given hour
-                    if (Integer.parseInt(ss.getTime().substring(0,2)) < Integer.parseInt(time.substring(0,2)))
-                    {
-                        pass = true;
-                    }
-                    //if the hours are the same, check minutes
-                    else if (Integer.parseInt(ss.getTime().substring(0,2)) == Integer.parseInt(time.substring(0,2)))
-                    {
-                        if (Integer.parseInt(ss.getTime().substring(3,5)) < Integer.parseInt(time.substring(3,5)))
-                        {
-                            pass = true;
-                        }
-                    }
-                    return pass;
-                }
-             )
-            .map(ss -> ss.getTitle())
-            .forEach(films -> System.out.println(films));
-            //quick test with "movies.csv": prints Eddie the Eagle (screening time 10:15) if you enter "10:20", and nothing if you enter "10:10"
+            .filter(movies -> movies.getScreeningTimeInMinutes() < screenTimeInMinutes)
+            .map(movies -> movies.getTitle())
+            .forEach(movie -> System.out.println(movie));
+        //quick test with "movies.csv": prints Eddie the Eagle (screening time 10:15) if you enter "10:20", and nothing if you enter "10:10"
     }
     
     /**
