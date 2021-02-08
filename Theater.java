@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 
 /**
- * Write a description of class Theater here.
+ * Class Theater allows to get information about the theater's movie schedule.
+ * It can tell, for example,  which movies are screening at specific time intervals or it can get the titles of movies with
+ * a particular performer or that are being played in a particular theater number, etc..
  *
  * @author Liudmila Strelnikova, Kailesh Sugumar
  * @version 08.02.2021
@@ -68,31 +70,16 @@ public class Theater
     */
     public void printMoviesInBefore(int theater, String time)
     {   
-        screeningSchedule.stream()
-            .filter(ss -> ss.getTheaterNumber() == theater)
-            .filter(
-                (ss)->
-                {
-                    boolean pass = false;//filter returns a boolean pass
-                    //first check if the hour of screening is less than the given hour
-                    if (Integer.parseInt(ss.getTime().substring(0,2)) < Integer.parseInt(time.substring(0,2)))
-                    {
-                        pass = true;
-                    }
-                    //if the hours are the same, check minutes
-                    else if (Integer.parseInt(ss.getTime().substring(0,2)) == Integer.parseInt(time.substring(0,2)))
-                    {
-                        if (Integer.parseInt(ss.getTime().substring(3,5)) < Integer.parseInt(time.substring(3,5)))
-                        {
-                            pass = true;
-                        }
-                    }
-                    return pass;
-                }
-             )
-            .map(ss -> ss.getTitle())
-            .forEach(films -> System.out.println(films));
-            
+         String[] timeHoursMinute = time.split(":");
+         int hours = Integer.parseInt(timeHoursMinute[0]);
+         int minutes = Integer.parseInt(timeHoursMinute[1]);
+         int screenTimeInMinutes = (hours * 60) + minutes;
+  
+         screeningSchedule.stream()
+            .filter(movies -> movies.getScreeningTimeInMinutes()< screenTimeInMinutes)
+            .filter(movies -> (movies.getTheaterNumber() == theater))
+            .map(movies -> movies.getTitle())
+            .forEach(movie -> System.out.println(movie));  
     }
     
     /**
@@ -111,42 +98,26 @@ public class Theater
      * Returns number of movies that start screening between start and end time. 
      * @param start start time
      * @param end end time
-     * @return numberOfMovies number of movies screening between start time and end time
+     * @return number of movies screening between start time and end time
      */
     public int numberOfMoviesInTimePeriod(String start, String end)
     {
-        int numberOfMovies = (int) screeningSchedule.stream()
-            .filter(
-                (ss)->
-                {
-                    boolean pass = false;//filter returns a boolean pass
-                    //first check if the hour of screening is less than the given hour
-                    if (Integer.parseInt(ss.getTime().substring(0,2)) < Integer.parseInt(end.substring(0,2)) &&
-                    Integer.parseInt(ss.getTime().substring(0,2)) > Integer.parseInt(start.substring(0,2)))
-                    {
-                        pass = true;
-                    }
-                    //if the hours are the same for start  time, check that minutes of the movie are greater
-                    else if (Integer.parseInt(ss.getTime().substring(0,2)) == Integer.parseInt(start.substring(0,2)))
-                    {
-                        if (Integer.parseInt(ss.getTime().substring(3,5)) > Integer.parseInt(start.substring(3,5)))
-                        {
-                            pass = true;
-                        }
-                    }
-                    //if the hours are the same for end  time, check that minutes of the movie are smaller
-                    else if (Integer.parseInt(ss.getTime().substring(0,2)) == Integer.parseInt(end.substring(0,2)))
-                    {
-                        if (Integer.parseInt(ss.getTime().substring(3,5)) < Integer.parseInt(end.substring(3,5)))
-                        {
-                            pass = true;
-                        }
-                    }
-                    return pass;
-                }
-             )
-             .count();
-        return numberOfMovies;
+        //first convert start time into string
+         String[] startTime = start.split(":");
+         int starthours = Integer.parseInt(startTime[0]);
+         int startminutes = Integer.parseInt(startTime[1]);
+         int startTimeInMinutes = (starthours * 60) + startminutes;
+         
+         //then convert end time into string
+         String[] endTime = end.split(":");
+         int endhours = Integer.parseInt(endTime[0]);
+         int endminutes = Integer.parseInt(endTime[1]);
+         int endTimeInMinutes = (endhours * 60) + endminutes;
+  
+        //.count() method returns value of type long, so it should be converted to integer first
+        return (int) screeningSchedule.stream()
+            .filter(movies -> movies.getScreeningTimeInMinutes() < endTimeInMinutes && movies.getScreeningTimeInMinutes() > startTimeInMinutes)
+            .count(); 
         //quick check: there are supposed to be 2 movies beween 17:00 and 18:30
     }
     
@@ -190,40 +161,26 @@ public class Theater
      * @return movies screening between start time and end time
      * 
     */
+   //pretty much same as moviesInTimePeriod but returns titles of movies
     public void printMoviesICanWatch(String start, String end)
     {
+        //first convert start time into string
+         String[] startTime = start.split(":");
+         int starthours = Integer.parseInt(startTime[0]);
+         int startminutes = Integer.parseInt(startTime[1]);
+         int startTimeInMinutes = (starthours * 60) + startminutes;
+         
+         //then convert end time into string
+         String[] endTime = end.split(":");
+         int endhours = Integer.parseInt(endTime[0]);
+         int endminutes = Integer.parseInt(endTime[1]);
+         int endTimeInMinutes = (endhours * 60) + endminutes;
+  
+        
         screeningSchedule.stream()
-            .filter(
-                (ss)->
-                {
-                    boolean pass = false;//filter returns a boolean pass
-                    //first check if the hour of screening is less than the given hour
-                    if (Integer.parseInt(ss.getTime().substring(0,2)) < Integer.parseInt(end.substring(0,2)) &&
-                    Integer.parseInt(ss.getTime().substring(0,2)) > Integer.parseInt(start.substring(0,2)))
-                    {
-                        pass = true;
-                    }
-                    //if the hours are the same for start  time, check that minutes of the movie are greater
-                    else if (Integer.parseInt(ss.getTime().substring(0,2)) == Integer.parseInt(start.substring(0,2)))
-                    {
-                        if (Integer.parseInt(ss.getTime().substring(3,5)) > Integer.parseInt(start.substring(3,5)))
-                        {
-                            pass = true;
-                        }
-                    }
-                    //if the hours are the same for end  time, check that minutes of the movie are smaller
-                    else if (Integer.parseInt(ss.getTime().substring(0,2)) == Integer.parseInt(end.substring(0,2)))
-                    {
-                        if (Integer.parseInt(ss.getTime().substring(3,5)) < Integer.parseInt(end.substring(3,5)))
-                        {
-                            pass = true;
-                        }
-                    }
-                    return pass;
-                }
-             )
-             .map(ss->ss.getTitle())
-             .forEach(movie->System.out.println(movie));
+            .filter(movies -> movies.getScreeningTimeInMinutes() < endTimeInMinutes && movies.getScreeningTimeInMinutes() > startTimeInMinutes)
+            .map(ss->ss.getTitle())
+            .forEach(movie->System.out.println(movie));
              //quick check: between 17:00 and 18:30 there is "The Queen's Gambit"and "Black Widow"
     }
     
@@ -232,10 +189,10 @@ public class Theater
      */
     public int totalDurationOfAllMovies()
     {
-        //1615 min expected from the movies.csv provided
         return screeningSchedule.stream()
             .map(ss -> ss.getDuration())
             .reduce(0,(acc,duration)->acc+duration);
+        //1615 min expected from the movies.csv provided
     }
     
     /**
@@ -245,30 +202,15 @@ public class Theater
      */
     public String genreAfter(String time)
     {
+        String[] timeHoursMinute = time.split(":");
+        int hours = Integer.parseInt(timeHoursMinute[0]);
+        int minutes = Integer.parseInt(timeHoursMinute[1]);
+        int screenTimeInMinutes = (hours * 60) + minutes;
+        
         return screeningSchedule.stream()
-            .filter(
-                (ss)->
-                {
-                    boolean pass = false;//filter returns a boolean pass
-                    //first check if the hour of screening is less than the given hour
-                    if (Integer.parseInt(ss.getTime().substring(0,2)) > Integer.parseInt(time.substring(0,2)))
-                    {
-                        pass = true;
-                    }
-                    //if the hours are the same, check minutes
-                    else if (Integer.parseInt(ss.getTime().substring(0,2)) == Integer.parseInt(time.substring(0,2)))
-                    {
-                        if (Integer.parseInt(ss.getTime().substring(3,5)) > Integer.parseInt(time.substring(3,5)))
-                        {
-                            pass = true;
-                        }
-                    }
-                    return pass;
-                }
-             )
+            .filter(ss -> ss.getScreeningTimeInMinutes() > screenTimeInMinutes)
             .map(ss -> ss.getGenre())
             .reduce("",(acc,genre) -> acc + genre + " ");//includes all in one string
-
     }
     
     /**
